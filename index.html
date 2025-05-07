@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Indicadores por Setor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #f8f9fa;
+      --card-bg: #ffffff;
+      --table-header-bg: #e9ecef;
+      /* --table-footer-bg: #dee2e6; -- Removed as footer is gone */
+      --shadow-color: rgba(0, 0, 0, 0.075);
+      --text-color: #212529;
+      --border-color: #dee2e6;
+
+      --color-saldo: #198754;
+      --color-porLider: #fd7e14;
+      --color-total: #0d6efd;
+      --color-text-on-dark: #ffffff;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-color);
+      font-size: 0.95rem;
+    }
+
+    .navbar {
+      box-shadow: 0 0.25rem 0.5rem var(--shadow-color);
+      margin-bottom: 0; /* Removed default margin if any from bs */
+    }
+
+    .navbar-brand {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1.6rem;
+    }
+
+    main {
+      /* margin-top: 2.5rem; -- No longer needed if navbar is directly above */
+      margin-bottom: 2.5rem;
+      /* No .container class here for full width for the section below */
+    }
+
+    #indicadores {
+      background: var(--card-bg);
+      /* border-radius: 0.75rem; -- Can be removed for full-width feel or kept */
+      padding: 1.5rem 2rem 2rem 2rem; /* Keeps content from screen edges */
+      /* box-shadow: 0 0.5rem 1.5rem var(--shadow-color); -- Shadow might look odd on full width */
+      /* border: 1px solid var(--border-color); -- Can be removed or kept */
+      margin-top: 0; /* If navbar is directly above */
+    }
+
+    #indicadores header {
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 1rem;
+    }
+    #indicadores header h2 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        color: var(--bs-primary);
+    }
+
+    .table thead th {
+      position: sticky;
+      top: 0; /* Adjust if you have a fixed navbar above this */
+      background: var(--table-header-bg);
+      z-index: 2;
+      border-bottom: 2px solid var(--border-color);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    input.form-control {
+      border-radius: 0.375rem;
+      text-align: center;
+      min-width: 70px;
+      max-width: 100px;
+      margin: 0 auto;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .table tbody td.saldo,
+    .table tbody td.porLider,
+    .table tbody td.total {
+      color: var(--color-text-on-dark);
+      font-weight: 500;
+      font-size: 1rem;
+      border-radius: 0.25rem;
+      padding: 0.5rem;
+    }
+
+    .table td.saldo { background-color: var(--color-saldo); }
+    .table td.porLider { background-color: var(--color-porLider); }
+    .table td.total { background-color: var(--color-total); }
+
+    .text-start { text-align: left !important; }
+    .ps-3 { padding-left: 1rem !important; }
+    .pe-3 { padding-right: 1rem !important; }
+
+    /* Adjust header for buttons */
+    #indicadores-header-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    }
+    #indicadores-header-controls h2 {
+        margin-bottom: 0.5rem; /* Add some space if it wraps */
+    }
+     @media (max-width: 768px) {
+        #indicadores-header-controls h2 {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        #indicadores-header-controls > div {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid"> <!-- Use container-fluid for full-width navbar content -->
+      <a class="navbar-brand" href="#"><i class="bi bi-bar-chart-line-fill me-2"></i>Indicadores Setoriais</a>
+    </div>
+  </nav>
+
+  <main> <!-- Removed .container -->
+    <section id="indicadores">
+      <header class="mb-4" id="indicadores-header-controls">
+        <h2 class="text-primary">Painel de Indicadores por Setor</h2>
+        <div>
+          <button id="saveDataBtn" class="btn btn-success me-2"><i class="bi bi-save me-1"></i> Salvar Dados</button>
+          <button id="loadDataBtn" class="btn btn-info"><i class="bi bi-upload me-1"></i> Carregar Dados</button>
+          <input type="file" id="loadFileInput" accept=".json" style="display: none;">
+        </div>
+      </header>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle text-center mb-0">
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th class="text-start ps-3">Setor</th>
+              <th><i class="bi bi-play-circle-fill text-success"></i> Inícios</th>
+              <th><i class="bi bi-stop-circle-fill text-danger"></i> Cessadas</th>
+              <th class="text-success-emphasis"><i class="bi bi-calculator-fill"></i> Saldo</th>
+              <th><i class="bi bi-people-fill text-secondary"></i> Líderes</th>
+              <th class="text-warning-emphasis"><i class="bi bi-pie-chart-fill"></i> Média Saldo/Líder</th>
+              <th><i class="bi bi-arrow-repeat text-secondary"></i> Ciclos</th>
+              <th class="text-primary-emphasis"><i class="bi bi-bullseye"></i> Índice Final</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Rows will be generated by JavaScript -->
+          </tbody>
+          <!-- tfoot removed -->
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const setores = [
+      {cod:3649,name:'MANDARIM'},{cod:3748,name:'MARACAJÁ'},{cod:3859,name:'TUCUNARÉ'},{cod:3843,name:'CURIÓ'},{cod:3845,name:'ROUXINOL'},{cod:3513,name:'TAMBAQUI'},{cod:3594,name:'BORBOLETAS'},{cod:3714,name:'GUEPARDO'},{cod:3591,name:'BÚFALO'},{cod:3306,name:'BOTO ROSA'},{cod:3642,name:'JAÇANÃ'},{cod:3424,name:'MAPARÁ'},{cod:3598,name:'ARARA'},{cod:3555,name:'CERVO'},{cod:3883,name:'TIGRE'},{cod:3596,name:'ARARACANGA'},{cod:3589,name:'PANTERA'},{cod:3863,name:'GARÇA'},{cod:3844,name:'LEOA'},{cod:249,name:'SERINGUEIRA'}
+    ];
+
+    const tbody = document.querySelector('tbody');
+    const saveDataBtn = document.getElementById('saveDataBtn');
+    const loadDataBtn = document.getElementById('loadDataBtn');
+    const loadFileInput = document.getElementById('loadFileInput');
+
+    // Store row update functions for later use during data load
+    const rowUpdaters = new Map();
+
+    setores.forEach(s => {
+      const tr = document.createElement('tr');
+      tr.dataset.cod = s.cod; // Store cod for easy lookup
+      tr.innerHTML = `
+        <td>${s.cod}</td>
+        <td class="text-start ps-3">${s.name}</td>
+        <td><input type="number" min="0" class="form-control form-control-sm inicios" placeholder="0" value="0"></td>
+        <td><input type="number" min="0" class="form-control form-control-sm cessadas" placeholder="0" value="0"></td>
+        <td class="saldo">0</td>
+        <td><input type="number" min="1" value="1" class="form-control form-control-sm lideres"></td>
+        <td class="porLider">0.00</td>
+        <td><input type="number" min="1" value="1" class="form-control form-control-sm ciclos"></td>
+        <td class="total">0.00</td>
+      `;
+      tbody.append(tr);
+
+      const iniciosInput = tr.querySelector('.inicios');
+      const cessadasInput = tr.querySelector('.cessadas');
+      const lideresInput = tr.querySelector('.lideres');
+      const ciclosInput = tr.querySelector('.ciclos');
+      const saldoCell = tr.querySelector('.saldo');
+      const plCell = tr.querySelector('.porLider');
+      const totCell = tr.querySelector('.total');
+
+      function atualizarLinhaEAnimar() {
+        const i = +iniciosInput.value || 0;
+        const c = +cessadasInput.value || 0;
+        const l = +lideresInput.value || 1;
+        const k = +ciclosInput.value || 1;
+
+        const saldo = i - c;
+        const porL = l > 0 ? saldo / l : 0;
+        const total = k > 0 ? porL / k : 0;
+
+        saldoCell.textContent = saldo;
+        plCell.textContent = porL.toFixed(2);
+        totCell.textContent = total.toFixed(2);
+
+        const cellsToAnimate = [saldoCell, plCell, totCell];
+        if (document.hidden) return; // Don't animate if tab is not visible
+
+        gsap.fromTo(cellsToAnimate,
+          { scale: 1.1, opacity: 0.8 },
+          {
+            duration: 0.35,
+            scale: 1,
+            opacity: 1,
+            stagger: 0.07,
+            ease: "back.out(1.7)"
+          }
+        );
+      }
+      rowUpdaters.set(s.cod.toString(), atualizarLinhaEAnimar); // Store updater by cod
+
+      [iniciosInput, cessadasInput, lideresInput, ciclosInput].forEach(el => {
+        el.addEventListener('input', atualizarLinhaEAnimar);
+      });
+      atualizarLinhaEAnimar(); // Initial calculation
+    });
+
+    // --- Save Data Functionality ---
+    saveDataBtn.addEventListener('click', () => {
+      const dataToSave = [];
+      document.querySelectorAll('tbody tr').forEach(tr => {
+        const cod = tr.dataset.cod;
+        const inicios = tr.querySelector('.inicios').value;
+        const cessadas = tr.querySelector('.cessadas').value;
+        const lideres = tr.querySelector('.lideres').value;
+        const ciclos = tr.querySelector('.ciclos').value;
+        dataToSave.push({ cod, inicios, cessadas, lideres, ciclos });
+      });
+
+      const jsonData = JSON.stringify(dataToSave, null, 2); // Pretty print JSON
+      const blob = new Blob([jsonData], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'indicadores_data.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      console.log('Data saved.');
+    });
+
+    // --- Load Data Functionality ---
+    loadDataBtn.addEventListener('click', () => {
+      loadFileInput.click(); // Trigger hidden file input
+    });
+
+    loadFileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (!file) {
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const loadedData = JSON.parse(e.target.result);
+          if (!Array.isArray(loadedData)) {
+            throw new Error("Formato de dados inválido. Esperado um array.");
+          }
+
+          loadedData.forEach(item => {
+            const tr = tbody.querySelector(`tr[data-cod="${item.cod}"]`);
+            if (tr) {
+              tr.querySelector('.inicios').value = item.inicios || 0;
+              tr.querySelector('.cessadas').value = item.cessadas || 0;
+              tr.querySelector('.lideres').value = item.lideres || 1;
+              tr.querySelector('.ciclos').value = item.ciclos || 1;
+
+              // Call the specific updater for this row
+              const updater = rowUpdaters.get(item.cod.toString());
+              if (updater) {
+                updater();
+              }
+            } else {
+              console.warn(`Setor com código ${item.cod} não encontrado na tabela.`);
+            }
+          });
+          console.log('Data loaded successfully.');
+        } catch (error) {
+          console.error('Erro ao carregar ou processar o arquivo JSON:', error);
+          alert(`Erro ao carregar dados: ${error.message}`);
+        } finally {
+          // Reset file input to allow loading the same file again
+          event.target.value = null;
+        }
+      };
+      reader.onerror = () => {
+        console.error('Erro ao ler o arquivo.');
+        alert('Erro ao ler o arquivo.');
+        event.target.value = null;
+      };
+      reader.readAsText(file);
+    });
+
+
+    // GSAP initial animations (adjusted delays)
+    // Navbar is sticky, so its initial animation might be less critical or different
+    gsap.from('.navbar', { duration: 0.5, y: -50, opacity: 0, ease: "power2.out" });
+    gsap.from('#indicadores header', { duration: 0.6, y: -30, opacity: 0, delay: 0.2, ease: "power2.out" });
+    gsap.from('#indicadores .table-responsive', { duration: 0.7, scale: 0.98, opacity: 0, delay: 0.3, ease: "back.out(1.2)" });
+    // Initial row animation can be simplified if table itself animates in
+    gsap.from('tbody tr', { duration: 0.4, opacity: 0, y: 15, stagger: 0.03, delay: 0.6, ease: "power2.out" });
+
+  </script>
+</body>
+</html>
