@@ -12,14 +12,13 @@
       --bg-page: #f8f9fa;
       --card-bg: #ffffff;
       --table-header-bg: #e9ecef;
-      --seringueira-row-bg: #e9ecef; /* Light gray for Seringueira row */
       --shadow-color: rgba(0, 0, 0, 0.075);
       --text-color: #212529;
       --border-color: #dee2e6;
 
       --color-saldo: #198754;
       --color-porLider: #fd7e14;
-      --color-total: #0d6efd; /* Bootstrap primary for Seringueira's special index */
+      --color-total: #0d6efd;
       --color-text-on-dark: #ffffff;
     }
 
@@ -46,100 +45,138 @@
     }
 
     #indicadores {
-      background: var(--card-bg);
-      padding: 1.5rem 2rem 2rem 2rem;
-      margin-top: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: var(--color-text-on-dark);
+      padding: 3rem 0;
     }
 
     #indicadores header {
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 1rem;
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    #indicadores h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 2.8rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.3);
+    }
+
+    #indicadores p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 0;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 0.5rem 1.5rem var(--shadow-color);
+      overflow: hidden;
+    }
+
+    .table-responsive {
+      border-radius: 0.75rem;
+      overflow: hidden;
+    }
+
+    .table {
+      margin-bottom: 0;
+      font-size: 0.9rem;
     }
 
     .table thead th {
-      position: sticky;
-      top: 56px; /* Adjust if your sticky navbar's height changes */
-      background: var(--table-header-bg);
-      z-index: 2;
+      background-color: var(--table-header-bg);
       border-bottom: 2px solid var(--border-color);
-      font-weight: 700;
+      font-weight: 600;
+      padding: 1rem 0.75rem;
       white-space: nowrap;
     }
 
-    input.form-control[readonly] {
-        background-color: var(--bs-secondary-bg);
-        opacity: 0.7;
-        border: none;
-    }
-    td.read-only-cell {
-        color: var(--bs-secondary-color);
+    .table tbody td {
+      padding: 0.875rem 0.75rem;
+      vertical-align: middle;
+      border-bottom: 1px solid var(--border-color);
     }
 
+    .table tbody tr:hover {
+      background-color: rgba(0, 123, 255, 0.05);
+    }
 
-    input.form-control {
+    .form-control-sm {
+      font-size: 0.85rem;
+      padding: 0.375rem 0.5rem;
       border-radius: 0.375rem;
+      border: 1px solid #ced4da;
       text-align: center;
-      min-width: 70px;
-      max-width: 100px;
-      margin: 0 auto;
-      padding: 0.25rem 0.5rem;
     }
 
-    .table td.saldo { background-color: var(--color-saldo); color: var(--color-text-on-dark); }
-    .table td.porLider { background-color: var(--color-porLider); color: var(--color-text-on-dark); }
-    .table td.total { background-color: var(--color-total); color: var(--color-text-on-dark); }
+    .form-control-sm:focus {
+      border-color: #86b7fe;
+      box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
 
-    .table td.saldo,
-    .table td.porLider,
-    .table td.total {
-      font-weight: 500;
+    .saldo {
+      font-weight: 600;
+      color: var(--color-saldo);
+    }
+
+    .porLider {
+      font-weight: 600;
+      color: var(--color-porLider);
+    }
+
+    .total {
+      font-weight: 700;
+      color: var(--color-total);
       font-size: 1rem;
-      border-radius: 0.25rem;
-      padding: 0.5rem;
     }
 
-    /* Specific styling for the SERINGUEIRA row */
-    tr.seringueira-row {
-        background-color: var(--seringueira-row-bg);
-    }
-    tr.seringueira-row td {
-        font-weight: 500; /* Normal or slightly bold */
-    }
-    /* The "Índice Final" for Seringueira will use the .total class for its color */
-    tr.seringueira-row td.total {
-        font-weight: bold; /* Make Seringueira's average index stand out */
+    .pontos {
+      font-weight: 600;
     }
 
-
-    .text-start { text-align: left !important; }
-    .ps-3 { padding-left: 1rem !important; }
-    .pe-3 { padding-right: 1rem !important; }
-
-    #indicadores-header-controls {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
+    .btn-group {
+      margin-top: 1.5rem;
     }
-    #indicadores-header-controls h2 {
-        margin-bottom: 0.5rem;
-        color: var(--bs-primary);
+
+    .btn {
+      border-radius: 0.5rem;
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
     }
-     @media (max-width: 768px) {
-        #indicadores-header-controls {
-            flex-direction: column;
-        }
-        #indicadores-header-controls h2 {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-        #indicadores-header-controls > div {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-        }
+
+    .btn-success {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #007bff, #6f42c1);
+      border: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+    }
+
+    /* Destaque especial para setor SERINGUEIRA */
+    .gerencia-row {
+      background: linear-gradient(135deg, #fff3cd, #ffeaa7) !important;
+      border-left: 4px solid #ffc107;
+    }
+
+    .gerencia-badge {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
   </style>
 </head>
@@ -152,33 +189,45 @@
 
   <main>
     <section id="indicadores">
-      <header class="mb-4" id="indicadores-header-controls">
-        <h2>Painel de Indicadores por Setor</h2>
-        <div>
-          <button id="saveDataBtn" class="btn btn-success"><i class="bi bi-save me-1"></i> Salvar Dados</button>
-          <button id="loadDataBtn" class="btn btn-info"><i class="bi bi-upload me-1"></i> Carregar Dados</button>
-          <input type="file" id="loadFileInput" accept=".json" style="display: none;">
+      <div class="container">
+        <header>
+          <h1><i class="bi bi-graph-up me-3"></i>Dashboard de Indicadores</h1>
+          <p>Acompanhe o desempenho dos setores em tempo real</p>
+        </header>
+        
+        <div class="card">
+          <div class="btn-group d-flex justify-content-center p-3 border-bottom" role="group">
+            <button type="button" class="btn btn-success" id="saveDataBtn">
+              <i class="bi bi-download me-2"></i>Salvar Dados
+            </button>
+            <button type="button" class="btn btn-primary" id="loadDataBtn">
+              <i class="bi bi-upload me-2"></i>Carregar Dados
+            </button>
+            <input type="file" id="loadFileInput" accept=".json" style="display: none;">
+          </div>
+          
+          <div class="table-responsive">
+            <table class="table table-hover align-middle text-center mb-0">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th class="text-start ps-3">Setor</th>
+                  <th><i class="bi bi-play-circle-fill text-success"></i> Inícios</th>
+                  <th><i class="bi bi-stop-circle-fill text-danger"></i> Cessadas</th>
+                  <th class="text-success-emphasis"><i class="bi bi-calculator-fill"></i> Saldo</th>
+                  <th><i class="bi bi-people-fill text-secondary"></i> Líderes</th>
+                  <th class="text-warning-emphasis"><i class="bi bi-pie-chart-fill"></i> Média Saldo/Líder</th>
+                  <th><i class="bi bi-arrow-repeat text-secondary"></i> Ciclos</th>
+                  <th class="text-primary-emphasis"><i class="bi bi-bullseye"></i> Índice Final</th>
+                  <th class="text-info-emphasis"><i class="bi bi-trophy-fill"></i> Pontos</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Rows will be generated by JavaScript -->
+              </tbody>
+            </table>
+          </div>
         </div>
-      </header>
-      <div class="table-responsive">
-        <table class="table table-hover align-middle text-center mb-0">
-          <thead>
-            <tr>
-              <th>Código</th>
-              <th class="text-start ps-3">Setor</th>
-              <th><i class="bi bi-play-circle-fill text-success"></i> Inícios</th>
-              <th><i class="bi bi-stop-circle-fill text-danger"></i> Cessadas</th>
-              <th class="text-success-emphasis"><i class="bi bi-calculator-fill"></i> Saldo</th>
-              <th><i class="bi bi-people-fill text-secondary"></i> Líderes</th>
-              <th class="text-warning-emphasis"><i class="bi bi-pie-chart-fill"></i> Média Saldo/Líder</th>
-              <th><i class="bi bi-arrow-repeat text-secondary"></i> Ciclos</th>
-              <th class="text-primary-emphasis"><i class="bi bi-bullseye"></i> Índice Final</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Data rows will be generated by JavaScript -->
-          </tbody>
-        </table>
       </div>
     </section>
   </main>
@@ -186,10 +235,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    const SERINGUEIRA_COD = 249; // Define Seringueira's code for easy checking
     const setores = [
-      {cod:3649,name:'MANDARIM'},{cod:3748,name:'MARACAJÁ'},{cod:3859,name:'TUCUNARÉ'},{cod:3843,name:'CURIÓ'},{cod:3845,name:'ROUXINOL'},{cod:3513,name:'TAMBAQUI'},{cod:3594,name:'BORBOLETAS'},{cod:3714,name:'GUEPARDO'},{cod:3591,name:'BÚFALO'},{cod:3306,name:'BOTO ROSA'},{cod:3642,name:'JAÇANÃ'},{cod:3424,name:'MAPARÁ'},{cod:3598,name:'ARARA'},{cod:3555,name:'CERVO'},{cod:3883,name:'TIGRE'},{cod:3596,name:'ARARACANGA'},{cod:3589,name:'PANTERA'},{cod:3863,name:'GARÇA'},{cod:3844,name:'LEOA'},
-      {cod:SERINGUEIRA_COD, name:'SERINGUEIRA'} // Seringueira is back
+      {cod:3649,name:'MANDARIM'},{cod:3748,name:'MARACAJÁ'},{cod:3859,name:'TUCUNARÉ'},{cod:3843,name:'CURIÓ'},{cod:3845,name:'ROUXINOL'},{cod:3513,name:'TAMBAQUI'},{cod:3594,name:'BORBOLETAS'},{cod:3714,name:'GUEPARDO'},{cod:3591,name:'BÚFALO'},{cod:3306,name:'BOTO ROSA'},{cod:3642,name:'JAÇANÃ'},{cod:3424,name:'MAPARÁ'},{cod:3598,name:'ARARA'},{cod:3555,name:'CERVO'},{cod:3883,name:'TIGRE'},{cod:3596,name:'ARARACANGA'},{cod:3589,name:'PANTERA'},{cod:3863,name:'GARÇA'},{cod:3844,name:'LEOA'},{cod:249,name:'SERINGUEIRA'}
     ];
 
     const tbody = document.querySelector('tbody');
@@ -197,132 +244,114 @@
     const loadDataBtn = document.getElementById('loadDataBtn');
     const loadFileInput = document.getElementById('loadFileInput');
 
+    // Store row update functions for later use during data load
     const rowUpdaters = new Map();
-
-    function updateSeringueiraIndiceFinal() {
-        let sumOfOtherIndices = 0;
-        let countOfOtherSectors = 0;
-
-        document.querySelectorAll('tbody tr[data-cod]').forEach(tr => {
-            const cod = parseInt(tr.dataset.cod);
-            if (cod === SERINGUEIRA_COD) return; // Skip Seringueira itself
-
-            // Recalculate or get the current values for other rows
-            const i = +tr.querySelector('.inicios').value || 0;
-            const c = +tr.querySelector('.cessadas').value || 0;
-            const l = +tr.querySelector('.lideres').value || 1;
-            const k = +tr.querySelector('.ciclos').value || 1;
-
-            const saldo = i - c;
-            const porL = l > 0 ? saldo / l : 0;
-            const indiceFinalIndividual = k > 0 ? porL / k : 0;
-
-            sumOfOtherIndices += indiceFinalIndividual;
-            countOfOtherSectors++;
-        });
-
-        const averageIndex = countOfOtherSectors > 0 ? sumOfOtherIndices / countOfOtherSectors : 0;
-        const seringueiraIndiceCell = document.getElementById('seringueiraIndiceFinal');
-        if (seringueiraIndiceCell) {
-            seringueiraIndiceCell.textContent = averageIndex.toFixed(2);
-            // Optional: Animate Seringueira's index update
-            if (!document.hidden) {
-                gsap.fromTo(seringueiraIndiceCell,
-                    { scale: 1.1, opacity: 0.8 },
-                    { duration: 0.35, scale: 1, opacity: 1, ease: "back.out(1.7)" }
-                );
-            }
-        }
-    }
-
 
     setores.forEach(s => {
       const tr = document.createElement('tr');
-      tr.dataset.cod = s.cod;
-      const isSeringueira = (s.cod === SERINGUEIRA_COD);
-      if (isSeringueira) {
-          tr.classList.add('seringueira-row');
+      tr.dataset.cod = s.cod; // Store cod for easy lookup
+      
+      // Destacar setor 249 SERINGUEIRA como gerência de vendas
+      if (s.cod === 249) {
+        tr.classList.add('gerencia-row');
       }
-
+      
       tr.innerHTML = `
         <td>${s.cod}</td>
-        <td class="text-start ps-3">${s.name}</td>
-        <td>${isSeringueira ? '<span class="read-only-cell">-</span>' : '<input type="number" min="0" class="form-control form-control-sm inicios" placeholder="0" value="0">'}</td>
-        <td>${isSeringueira ? '<span class="read-only-cell">-</span>' : '<input type="number" min="0" class="form-control form-control-sm cessadas" placeholder="0" value="0">'}</td>
-        <td class="${isSeringueira ? 'read-only-cell' : 'saldo'}">${isSeringueira ? '-' : '0'}</td>
-        <td>${isSeringueira ? '<span class="read-only-cell">-</span>' : '<input type="number" min="1" value="1" class="form-control form-control-sm lideres">'}</td>
-        <td class="${isSeringueira ? 'read-only-cell' : 'porLider'}">${isSeringueira ? '-' : '0.00'}</td>
-        <td>${isSeringueira ? '<span class="read-only-cell">-</span>' : '<input type="number" min="1" value="1" class="form-control form-control-sm ciclos">'}</td>
-        <td id="${isSeringueira ? 'seringueiraIndiceFinal' : ''}" class="total">${isSeringueira ? '0.00' : '0.00'}</td>
+        <td class="text-start ps-3">
+          ${s.name}
+          ${s.cod === 249 ? '<span class="badge bg-warning text-dark ms-2 gerencia-badge"><i class="bi bi-star-fill"></i> GERÊNCIA DE VENDAS</span>' : ''}
+        </td>
+        <td><input type="number" min="0" class="form-control form-control-sm inicios" placeholder="0" value="0"></td>
+        <td><input type="number" min="0" class="form-control form-control-sm cessadas" placeholder="0" value="0"></td>
+        <td class="saldo">0</td>
+        <td><input type="number" min="0" value="0" class="form-control form-control-sm lideres"></td>
+        <td class="porLider">0.00</td>
+        <td><input type="number" min="0" value="0" class="form-control form-control-sm ciclos"></td>
+        <td class="total">0.00</td>
+        <td class="pontos"><span class="badge bg-secondary">0</span></td>
       `;
       tbody.append(tr);
 
-      if (!isSeringueira) {
-        const iniciosInput = tr.querySelector('.inicios');
-        const cessadasInput = tr.querySelector('.cessadas');
-        const lideresInput = tr.querySelector('.lideres');
-        const ciclosInput = tr.querySelector('.ciclos');
-        const saldoCell = tr.querySelector('.saldo');
-        const plCell = tr.querySelector('.porLider');
-        const totCell = tr.querySelector('.total'); // Seringueira's total cell is handled separately
+      const iniciosInput = tr.querySelector('.inicios');
+      const cessadasInput = tr.querySelector('.cessadas');
+      const lideresInput = tr.querySelector('.lideres');
+      const ciclosInput = tr.querySelector('.ciclos');
+      const saldoCell = tr.querySelector('.saldo');
+      const plCell = tr.querySelector('.porLider');
+      const totCell = tr.querySelector('.total');
+      const pontosCell = tr.querySelector('.pontos');
 
-        function atualizarLinhaEAnimar() {
-          const i = +iniciosInput.value || 0;
-          const c = +cessadasInput.value || 0;
-          const l = +lideresInput.value || 1;
-          const k = +ciclosInput.value || 1;
+      function atualizarLinhaEAnimar() {
+        const i = +iniciosInput.value || 0;
+        const c = +cessadasInput.value || 0;
+        const l = +lideresInput.value || 0;
+        const k = +ciclosInput.value || 0;
 
-          const saldo = i - c;
-          const porL = l > 0 ? saldo / l : 0;
-          const total = k > 0 ? porL / k : 0;
+        const saldo = i - c;
+        const porL = l > 0 ? saldo / l : 0;
+        const total = k > 0 ? porL / k : 0;
 
-          saldoCell.textContent = saldo;
-          plCell.textContent = porL.toFixed(2);
-          totCell.textContent = total.toFixed(2); // This is for non-Seringueira rows
-
-          if (!document.hidden) {
-              gsap.fromTo([saldoCell, plCell, totCell],
-                { scale: 1.1, opacity: 0.8 },
-                {
-                  duration: 0.35,
-                  scale: 1,
-                  opacity: 1,
-                  stagger: 0.07,
-                  ease: "back.out(1.7)"
-                }
-              );
-          }
-          updateSeringueiraIndiceFinal(); // Update Seringueira's average
+        // Sistema de pontuação baseado no Índice Final
+        let pontos = 0;
+        let badgeClass = 'bg-secondary';
+        let badgeIcon = '';
+        
+        if (total < 0) {
+          pontos = 0;
+          badgeClass = 'bg-danger';
+          badgeIcon = '<i class="bi bi-x-circle-fill me-1"></i>';
+        } else if (total >= 0 && total <= 2) {
+          pontos = 1;
+          badgeClass = 'bg-warning text-dark';
+          badgeIcon = '<i class="bi bi-dash-circle-fill me-1"></i>';
+        } else if (total > 2) {
+          pontos = 2;
+          badgeClass = 'bg-success';
+          badgeIcon = '<i class="bi bi-check-circle-fill me-1"></i>';
         }
-        rowUpdaters.set(s.cod.toString(), atualizarLinhaEAnimar);
 
-        [iniciosInput, cessadasInput, lideresInput, ciclosInput].forEach(el => {
-          el.addEventListener('input', atualizarLinhaEAnimar);
-        });
-        // Initial calculation for this data row
-        atualizarLinhaEAnimar();
+        saldoCell.textContent = saldo;
+        plCell.textContent = porL.toFixed(2);
+        totCell.textContent = total.toFixed(2);
+        pontosCell.innerHTML = `<span class="badge ${badgeClass}">${badgeIcon}${pontos}</span>`;
+
+        const cellsToAnimate = [saldoCell, plCell, totCell, pontosCell];
+        if (document.hidden) return; // Don't animate if tab is not visible
+
+        gsap.fromTo(cellsToAnimate,
+          { scale: 1.1, opacity: 0.8 },
+          {
+            duration: 0.35,
+            scale: 1,
+            opacity: 1,
+            stagger: 0.07,
+            ease: "back.out(1.7)"
+          }
+        );
       }
+      rowUpdaters.set(s.cod.toString(), atualizarLinhaEAnimar); // Store updater by cod
+
+      [iniciosInput, cessadasInput, lideresInput, ciclosInput].forEach(el => {
+        el.addEventListener('input', atualizarLinhaEAnimar);
+      });
+      atualizarLinhaEAnimar(); // Initial calculation
     });
-
-    // Initial calculation for Seringueira's special index
-    updateSeringueiraIndiceFinal();
-
 
     // --- Save Data Functionality ---
     saveDataBtn.addEventListener('click', () => {
       const dataToSave = [];
-      document.querySelectorAll('tbody tr[data-cod]').forEach(tr => {
-        const cod = parseInt(tr.dataset.cod);
-        if (cod === SERINGUEIRA_COD) return; // Don't save Seringueira's dummy data
-
+      document.querySelectorAll('tbody tr').forEach(tr => {
+        const cod = tr.dataset.cod;
         const inicios = tr.querySelector('.inicios').value;
         const cessadas = tr.querySelector('.cessadas').value;
         const lideres = tr.querySelector('.lideres').value;
         const ciclos = tr.querySelector('.ciclos').value;
-        dataToSave.push({ cod, inicios, cessadas, lideres, ciclos });
+        const pontos = tr.querySelector('.pontos .badge').textContent.replace(/[^0-9]/g, ''); // Extract only number
+        dataToSave.push({ cod, inicios, cessadas, lideres, ciclos, pontos });
       });
 
-      const jsonData = JSON.stringify(dataToSave, null, 2);
+      const jsonData = JSON.stringify(dataToSave, null, 2); // Pretty print JSON
       const blob = new Blob([jsonData], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -337,46 +366,52 @@
 
     // --- Load Data Functionality ---
     loadDataBtn.addEventListener('click', () => {
-      loadFileInput.click();
+      loadFileInput.click(); // Trigger hidden file input
     });
 
     loadFileInput.addEventListener('change', (event) => {
       const file = event.target.files[0];
-      if (!file) return;
+      if (!file) {
+        return;
+      }
 
       const reader = new FileReader();
       reader.onload = (e) => {
         try {
           const loadedData = JSON.parse(e.target.result);
-          if (!Array.isArray(loadedData)) throw new Error("Formato inválido.");
+          if (!Array.isArray(loadedData)) {
+            throw new Error("Formato de dados inválido. Esperado um array.");
+          }
 
           loadedData.forEach(item => {
-            const cod = parseInt(item.cod);
-            if (cod === SERINGUEIRA_COD) return; // Seringueira data is not loaded directly
-
-            const tr = tbody.querySelector(`tr[data-cod="${cod}"]`);
+            const tr = tbody.querySelector(`tr[data-cod="${item.cod}"]`);
             if (tr) {
               tr.querySelector('.inicios').value = item.inicios || 0;
               tr.querySelector('.cessadas').value = item.cessadas || 0;
-              tr.querySelector('.lideres').value = item.lideres || 1;
-              tr.querySelector('.ciclos').value = item.ciclos || 1;
+              tr.querySelector('.lideres').value = item.lideres || 0;
+              tr.querySelector('.ciclos').value = item.ciclos || 0;
 
+              // Call the specific updater for this row
               const updater = rowUpdaters.get(item.cod.toString());
-              if (updater) updater(); // This will also trigger updateSeringueiraIndiceFinal
+              if (updater) {
+                updater();
+              }
+            } else {
+              console.warn(`Setor com código ${item.cod} não encontrado na tabela.`);
             }
           });
-          updateSeringueiraIndiceFinal(); // Ensure Seringueira's index is updated after all loads
-          console.log('Data loaded.');
+          console.log('Data loaded successfully.');
         } catch (error) {
-          console.error('Erro ao carregar JSON:', error);
-          alert(`Erro: ${error.message}`);
+          console.error('Erro ao carregar ou processar o arquivo JSON:', error);
+          alert(`Erro ao carregar dados: ${error.message}`);
         } finally {
+          // Reset file input to allow loading the same file again
           event.target.value = null;
         }
       };
       reader.onerror = () => {
-        console.error('Erro ao ler arquivo.');
-        alert('Erro ao ler arquivo.');
+        console.error('Erro ao ler o arquivo.');
+        alert('Erro ao ler o arquivo.');
         event.target.value = null;
       };
       reader.readAsText(file);
@@ -384,9 +419,9 @@
 
     // GSAP initial animations
     gsap.from('.navbar', { duration: 0.5, y: -50, opacity: 0, ease: "power2.out" });
-    gsap.from('#indicadores header', { duration: 0.6, y: -30, opacity: 0, delay: 0.1, ease: "power2.out" });
-    gsap.from('#indicadores .table-responsive thead', { duration: 0.5, opacity: 0, y: -20, delay: 0.2, ease: "power2.out" });
-    gsap.from('tbody tr', { duration: 0.4, opacity: 0, y: 15, stagger: 0.03, delay: 0.3, ease: "power2.out" });
+    gsap.from('#indicadores header', { duration: 0.6, y: -30, opacity: 0, delay: 0.2, ease: "power2.out" });
+    gsap.from('#indicadores .card', { duration: 0.7, scale: 0.98, opacity: 0, delay: 0.3, ease: "back.out(1.2)" });
+    gsap.from('tbody tr', { duration: 0.4, opacity: 0, y: 15, stagger: 0.03, delay: 0.6, ease: "power2.out" });
 
   </script>
 </body>
