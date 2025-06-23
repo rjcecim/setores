@@ -135,8 +135,34 @@
     }
 
     .pontos {
-      font-weight: 600;
-    }
+      /* garante que o conteúdo fique centralizado */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .pontos .point-circle {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 50%;
+        font-weight: 700;
+        font-size: 1rem;
+        color: #fff;
+        transition: transform 0.2s;
+      }
+
+      * Cores conforme faixa de pontos */
+      .point-circle.bg-danger   { background: #dc3545; } /* < 1 */
+      .point-circle.bg-warning  { background: #ffc107; color: #212529; } /* 1–2 */
+      .point-circle.bg-success  { background: #198754; } /* > 2 */
+
+      /* efeito hover/leitura */
+      .pontos .point-circle:hover {
+        transform: scale(1.1);
+      }
 
     .btn-group {
       margin-top: 1.5rem;
@@ -314,7 +340,11 @@
         saldoCell.textContent = saldo;
         plCell.textContent = porL.toFixed(2);
         totCell.textContent = total.toFixed(2);
-        pontosCell.innerHTML = `<span class="badge ${badgeClass}">${badgeIcon}${pontos}</span>`;
+        pontosCell.innerHTML = `
+        <span class="point-circle ${badgeClass.replace(/bg-/, 'bg-')}">
+          ${pontos}
+        </span>
+      `;
 
         const cellsToAnimate = [saldoCell, plCell, totCell, pontosCell];
         if (document.hidden) return; // Don't animate if tab is not visible
