@@ -2,57 +2,88 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Indicadores por Setor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     :root {
-      --bg-page: #f8f9fa;
-      --card-bg: #ffffff;
-      --table-header-bg: #e9ecef;
-      --shadow-color: rgba(0, 0, 0, 0.075);
-      --text-color: #212529;
-      --border-color: #dee2e6;
+      --primary: #4f46e5;
+      --primary-dark: #4338ca;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-700: #334155;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    }
 
-      --color-saldo: #198754;
-      --color-porLider: #fd7e14;
-      --color-total: #0d6efd;
-      --color-text-on-dark: #ffffff;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f1f5f9;
+      color: var(--dark);
+      line-height: 1.5;
+      overflow-y: auto;
     }
 
     body {
-      font-family: 'Roboto', sans-serif;
-      background-color: var(--bg-page);
-      color: var(--text-color);
-      font-size: 0.95rem;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .app-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     .navbar {
-      box-shadow: 0 0.25rem 0.5rem var(--shadow-color);
-      margin-bottom: 0;
+      background: white;
+      box-shadow: var(--shadow-sm);
+      padding: 0.75rem 1.5rem;
+      z-index: 50;
     }
 
     .navbar-brand {
-      font-family: 'Montserrat', sans-serif;
       font-weight: 700;
-      font-size: 1.6rem;
+      font-size: 1.25rem;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    main {
-      margin-bottom: 2.5rem;
+    .navbar-brand i {
+      color: var(--primary);
     }
 
-    #indicadores {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: var(--color-text-on-dark);
-      padding: 3rem 0;
+    .main-content {
+      flex: 1;
+      padding: 1.5rem;
+      gap: 1.5rem;
     }
 
-    #indicadores header {
-      text-align: center;
-      margin-bottom: 2.5rem;
+    .dashboard-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     #indicadores h1 {
@@ -135,34 +166,135 @@
     }
 
     .pontos {
-      /* garante que o conteúdo fique centralizado */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.75rem 0;
+      min-height: 70px;
+      position: relative;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(5px);
+      border-radius: 12px;
+      margin: 2px 4px;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
 
+    .pontos:hover {
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .pontos .point-circle {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: white;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .point-circle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .point-circle::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 150%;
+      height: 150%;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.5s ease;
+      z-index: -1;
+      border-radius: 50%;
+    }
+
+    .point-circle:hover::after {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .point-circle:hover::before {
+      opacity: 1;
+    }
+
+    /* Score-specific styles */
+    .point-circle.bg-danger { 
+      background: linear-gradient(145deg, #ff4757, #ff6b81);
+      box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+    }
+
+    .point-circle.bg-warning { 
+      background: linear-gradient(145deg, #ffc107, #ffab00);
+      box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+      color: #212529 !important;
+    }
+
+    .point-circle.bg-success { 
+      background: linear-gradient(145deg, #2ed573, #7bed9f);
+      box-shadow: 0 4px 15px rgba(46, 213, 115, 0.3);
+    }
+
+    /* Hover effects */
+    .pontos .point-circle:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .pontos .point-circle:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    /* Animations */
+    @keyframes popIn {
+      0% { transform: scale(0.7) rotate(-5deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0); opacity: 1; }
+    }
+
+    @keyframes pulse-update {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    .point-circle.updated {
+      animation: pulse-update 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .pontos {
+        min-height: 60px;
+        padding: 0.5rem;
+      }
+      
       .pontos .point-circle {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: 2.2rem;
-        height: 2.2rem;
-        border-radius: 50%;
-        font-weight: 700;
-        font-size: 1rem;
-        color: #fff;
-        transition: transform 0.2s;
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.1rem;
+        border-radius: 8px;
       }
-
-      * Cores conforme faixa de pontos */
-      .point-circle.bg-danger   { background: #dc3545; } /* < 1 */
-      .point-circle.bg-warning  { background: #ffc107; color: #212529; } /* 1–2 */
-      .point-circle.bg-success  { background: #198754; } /* > 2 */
-
-      /* efeito hover/leitura */
-      .pontos .point-circle:hover {
-        transform: scale(1.1);
-      }
+    }
 
     .btn-group {
       margin-top: 1.5rem;
@@ -199,6 +331,56 @@
       animation: pulse 2s infinite;
     }
 
+    .gerencia-row {
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+      border-left: 4px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      border-radius: 8px;
+    }
+
+    .gerencia-row::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 4px;
+      background: linear-gradient(90deg, #ffffff, #f8f9fa, #ffffff);
+      border-radius: 2px;
+      box-shadow: 0 1px 3px rgba(255, 255, 255, 0.5);
+    }
+
+    .gerencia-badge {
+      background: linear-gradient(135deg, var(--warning), #fbbf24);
+      color: #000 !important;
+      font-size: 0.7rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      animation: pulse-badge 2s infinite;
+    }
+
+    @keyframes pulse-badge {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .gerencia-row .gerencia-badge i {
+      color: #d97706;
+      margin-right: 0.25rem;
+      font-size: 0.8rem;
+    }
+
+    .gerencia-row td {
+      position: relative;
+      z-index: 1;
+    }
+
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.05); }
@@ -207,45 +389,76 @@
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"><i class="bi bi-bar-chart-line-fill me-2"></i>Indicadores Setoriais</a>
-    </div>
-  </nav>
+  <div class="app-container">
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid px-0">
+        <a class="navbar-brand" href="#">
+          <i class="bi bi-speedometer2"></i>
+          <span>Indicadores Setoriais</span>
+        </a>
+      </div>
+    </nav>
 
-  <main>
-    <section id="indicadores">
-      <div class="container">
-        <header>
-          <h1><i class="bi bi-graph-up me-3"></i>Dashboard de Indicadores</h1>
-          <p>Acompanhe o desempenho dos setores em tempo real</p>
-        </header>
-        
-        <div class="card">
-          <div class="btn-group d-flex justify-content-center p-3 border-bottom" role="group">
-            <button type="button" class="btn btn-success" id="saveDataBtn">
-              <i class="bi bi-download me-2"></i>Salvar Dados
-            </button>
-            <button type="button" class="btn btn-primary" id="loadDataBtn">
-              <i class="bi bi-upload me-2"></i>Carregar Dados
-            </button>
-            <input type="file" id="loadFileInput" accept=".json" style="display: none;">
+    <main class="main-content flex-grow-1">
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Dashboard de Indicadores</h1>
+        <div class="action-buttons">
+          <button type="button" class="btn btn-success" id="saveDataBtn">
+            <i class="bi bi-download"></i>
+            <span>Salvar Dados</span>
+          </button>
+          <button type="button" class="btn btn-primary" id="loadDataBtn">
+            <i class="bi bi-upload"></i>
+            <span>Carregar Dados</span>
+          </button>
+          <input type="file" id="loadFileInput" accept=".json" style="display: none">
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Top 5 Setores</h5>
+              <div class="chart-container" style="position: relative; height: 300px;">
+                <canvas id="topSectorsChart"></canvas>
+              </div>
+            </div>
           </div>
-          
-          <div class="table-responsive">
-            <table class="table table-hover align-middle text-center mb-0">
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Distribuição de Pontos</h5>
+              <div class="chart-container" style="position: relative; height: 300px;">
+                <canvas id="pointsChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Section -->
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Dados Detalhados por Setor</h5>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-container" style="overflow-y: auto;">
+            <table class="table table-hover align-middle">
               <thead>
                 <tr>
                   <th>Código</th>
-                  <th class="text-start ps-3">Setor</th>
-                  <th><i class="bi bi-play-circle-fill text-success"></i> Inícios</th>
-                  <th><i class="bi bi-stop-circle-fill text-danger"></i> Cessadas</th>
-                  <th class="text-success-emphasis"><i class="bi bi-calculator-fill"></i> Saldo</th>
-                  <th><i class="bi bi-people-fill text-secondary"></i> Líderes</th>
-                  <th class="text-warning-emphasis"><i class="bi bi-pie-chart-fill"></i> Média Saldo/Líder</th>
-                  <th><i class="bi bi-arrow-repeat text-secondary"></i> Ciclos</th>
-                  <th class="text-primary-emphasis"><i class="bi bi-bullseye"></i> Índice Final</th>
-                  <th class="text-info-emphasis"><i class="bi bi-trophy-fill"></i> Pontos</th>
+                  <th>Setor</th>
+                  <th>Inícios</th>
+                  <th>Cessadas</th>
+                  <th>Saldo</th>
+                  <th>Líderes</th>
+                  <th>Média/Líder</th>
+                  <th>Ciclos</th>
+                  <th>Índice Final</th>
+                  <th>Pontos</th>
                 </tr>
               </thead>
               <tbody>
@@ -255,15 +468,121 @@
           </div>
         </div>
       </div>
-    </section>
-  </main>
+    </main>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
+    // Global chart instances
+    let topSectorsChart, pointsChart;
+    
     const setores = [
       {cod:3649,name:'MANDARIM'},{cod:3748,name:'MARACAJÁ'},{cod:3859,name:'TUCUNARÉ'},{cod:3843,name:'CURIÓ'},{cod:3845,name:'ROUXINOL'},{cod:3513,name:'TAMBAQUI'},{cod:3594,name:'BORBOLETAS'},{cod:3714,name:'GUEPARDO'},{cod:3591,name:'BÚFALO'},{cod:3306,name:'BOTO ROSA'},{cod:3642,name:'JAÇANÃ'},{cod:3424,name:'MAPARÁ'},{cod:3598,name:'ARARA'},{cod:3555,name:'CERVO'},{cod:3883,name:'TIGRE'},{cod:3596,name:'ARARACANGA'},{cod:3589,name:'PANTERA'},{cod:3863,name:'GARÇA'},{cod:3844,name:'LEOA'},{cod:249,name:'SERINGUEIRA'}
     ];
+    
+    // Initialize charts when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      initCharts();
+    });
+    
+    // Function to initialize charts
+    function initCharts() {
+      // Top Sectors Chart (Horizontal Bar Chart)
+      const topSectorsCtx = document.getElementById('topSectorsChart').getContext('2d');
+      performanceChart = new Chart(topSectorsCtx, {
+        type: 'bar',
+        data: {
+          labels: ['SERINGUEIRA', 'TIGRE', 'ARARACANGA', 'PANTERA', 'GARÇA'],
+          datasets: [{
+            label: 'Índice Final',
+            data: [1.0, 1.0, 1.0, 1.0, 1.0],
+            backgroundColor: [
+              'rgba(16, 185, 129, 0.8)',
+              'rgba(34, 197, 94, 0.8)',
+              'rgba(59, 130, 246, 0.8)',
+              'rgba(139, 92, 246, 0.8)',
+              'rgba(236, 72, 153, 0.8)'
+            ],
+            borderColor: [
+              'rgba(16, 185, 129, 1)',
+              'rgba(34, 197, 94, 1)',
+              'rgba(59, 130, 246, 1)',
+              'rgba(139, 92, 246, 1)',
+              'rgba(236, 72, 153, 1)'
+            ],
+            borderWidth: 1,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 2,
+              ticks: {
+                stepSize: 0.5
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `Índice: ${context.parsed.x.toFixed(2)}`;
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      // Points Distribution Chart (Doughnut)
+      const pointsCtx = document.getElementById('pointsChart').getContext('2d');
+      pointsChart = new Chart(pointsCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['0 Pontos', '1 Ponto', '2 Pontos'],
+          datasets: [{
+            data: [0, 20, 0],
+            backgroundColor: [
+              'rgba(239, 68, 68, 0.7)',
+              'rgba(245, 158, 11, 0.7)',
+              'rgba(16, 185, 129, 0.7)'
+            ],
+            borderColor: [
+              'rgba(239, 68, 68, 1)',
+              'rgba(245, 158, 11, 1)',
+              'rgba(16, 185, 129, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right'
+            }
+          },
+          cutout: '70%'
+        }
+      });
+    }
+    
+    // Function to update charts with actual data
+    function updateCharts() {
+      // This function will be called when data changes
+      // Implementation will be added later
+    }
 
     const tbody = document.querySelector('tbody');
     const saveDataBtn = document.getElementById('saveDataBtn');
@@ -275,28 +594,34 @@
 
     setores.forEach(s => {
       const tr = document.createElement('tr');
-      tr.dataset.cod = s.cod; // Store cod for easy lookup
-      
-      // Destacar setor 249 SERINGUEIRA como gerência de vendas
-      if (s.cod === 249) {
-        tr.classList.add('gerencia-row');
-      }
-      
-      tr.innerHTML = `
-        <td>${s.cod}</td>
-        <td class="text-start ps-3">
-          ${s.name}
-          ${s.cod === 249 ? '<span class="badge bg-warning text-dark ms-2 gerencia-badge"><i class="bi bi-star-fill"></i> GERÊNCIA DE VENDAS</span>' : ''}
-        </td>
-        <td><input type="number" min="0" class="form-control form-control-sm inicios" placeholder="0" value="0"></td>
-        <td><input type="number" min="0" class="form-control form-control-sm cessadas" placeholder="0" value="0"></td>
-        <td class="saldo">0</td>
-        <td><input type="number" min="0" value="0" class="form-control form-control-sm lideres"></td>
-        <td class="porLider">0.00</td>
-        <td><input type="number" min="0" value="0" class="form-control form-control-sm ciclos"></td>
-        <td class="total">0.00</td>
-        <td class="pontos"><span class="badge bg-secondary">0</span></td>
-      `;
+    tr.dataset.cod = s.cod; // Store cod for easy lookup
+    
+    // Destacar setor 249 SERINGUEIRA como gerência de vendas
+    if (s.cod === 249) {
+      tr.classList.add('gerencia-row');
+    }
+    
+    tr.innerHTML = `
+      <td class="fw-semibold">${s.cod}</td>
+      <td class="text-start">
+        ${s.cod === 249 ? `
+          <div class="d-flex flex-column">
+            <span class="fw-bold">SERINGUEIRA</span>
+            <span class="gerencia-badge d-inline-flex align-items-center" style="width: fit-content; margin-top: 2px;">
+              <i class="bi bi-star-fill"></i> GERÊNCIA
+            </span>
+          </div>
+        ` : s.name}
+      </td>
+      <td><input type="number" min="0" class="form-control inicios" placeholder="0" value="0"></td>
+      <td><input type="number" min="0" class="form-control cessadas" placeholder="0" value="0"></td>
+      <td class="saldo fw-semibold">0</td>
+      <td><input type="number" min="0" value="0" class="form-control lideres"></td>
+      <td class="porLider fw-medium">0.00</td>
+      <td><input type="number" min="0" value="0" class="form-control ciclos"></td>
+      <td class="total fw-semibold">0.00</td>
+      <td class="pontos"></td>
+    `;
       tbody.append(tr);
 
       const iniciosInput = tr.querySelector('.inicios');
@@ -340,6 +665,7 @@
         saldoCell.textContent = saldo;
         plCell.textContent = porL.toFixed(2);
         totCell.textContent = total.toFixed(2);
+        
         pontosCell.innerHTML = `
         <span class="point-circle ${badgeClass.replace(/bg-/, 'bg-')}">
           ${pontos}
